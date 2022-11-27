@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   FaCartPlus,
   FaDashcube,
@@ -21,10 +21,14 @@ import NavItem from "./NavItem";
 import "./headers.scss";
 import UserIconData from "./UserIconData";
 import { BsArrow90DegDown, BsArrowBarUp, BsCart } from "react-icons/bs";
+import CartComponent from "../CartComp/CartComponent";
 
 
 
 const Header = () => {
+  const [openCart, setopenCart] = useState(false);
+
+
   return (
     <div className="navbar">
       <div className="wrapper">
@@ -74,13 +78,14 @@ const Header = () => {
             <Link to={`/contact`}>
               <MdFavorite className="icon-class"></MdFavorite>
             </Link>
-            <div className="cart-icon">
+            <div className="cart-icon" onClick={(e)=>setopenCart(!openCart)}>
               <BsCart cla></BsCart>
               <span>0</span>
             </div>
           </div>
         </div>
       </div>
+      {openCart && <CartComponent></CartComponent>}
     </div>
   );
 };
