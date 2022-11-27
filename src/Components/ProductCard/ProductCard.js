@@ -6,7 +6,7 @@ const ProductCard = ({ imagesData, Categories, Name, Type, ID
  
   if (imagesData) {
     return (
-      <Link className="link" to={`products/${ID}`}>
+      <Link className="link" to={`/product/${ID}`}>
         <div className="card">
           <div className="image">
             <span className="newsesson">New Session</span>
