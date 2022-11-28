@@ -22,7 +22,11 @@ useEffect(() => {
 }, []);
 
 const apicall = async ()=>{
-    const res = await InvokeAPI('products','get','','',{populate:'*'},'')
+  let query = {
+    populate:'*',
+    '[filters][product_type][$eq]':type
+  }
+    const res = await InvokeAPI('products','get','','',query,'')
     
   
     setProducts(res.data)
@@ -56,10 +60,10 @@ const apicall = async ()=>{
           // data["Regular price"]="reglar_price";
           // console.log(data);
 
-         return (< >{loading?<Bars
+         return (<React.Fragment key={data.id} >{loading?<Bars
           width=''
           height= '150'
-        />:<ProductCard  id={data.id} {...data.attributes} ></ProductCard>}</>)
+        />:<ProductCard  id={data.id} {...data.attributes} ></ProductCard>}</React.Fragment>)
         })}
       </div>
     </div>
