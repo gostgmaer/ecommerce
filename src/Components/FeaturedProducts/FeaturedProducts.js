@@ -1,14 +1,38 @@
-import React from "react";
+import React ,{useState,useEffect} from "react";
 import ProductCard from "../ProductCard/ProductCard";
 import { imgdata } from "./data";
 import "./FeaturedProducts.scss";
+import InvokeAPI from "../../APICALL/apicall";
+
+import { Bars } from  'react-loader-spinner'
+
+import { Audio } from  'react-loader-spinner'
 
 const FeaturedProducts = ({ type }) => {
 //   console.log(imgdata);
 
-  imgdata.forEach((element) => {
-    element["imagesData"] = element.Images.split(",");
-  });
+
+const [products, setProducts] = useState([]);
+const [loading, setloading] = useState(true);
+
+useEffect(() => {
+   
+  apicall()
+  console.log(products);
+}, []);
+
+const apicall = async ()=>{
+    const res = await InvokeAPI('products','get','','',{populate:'*'},'')
+    
+  
+    setProducts(res.data)
+    setloading(false)
+    // console.log(products);
+}
+
+  // imgdata.forEach((element) => {
+  //   element["imagesData"] = element.Images.split(",");
+  // });
   console.log(imgdata);
   return (
     <div className="FeaturedProducts">
@@ -28,10 +52,14 @@ const FeaturedProducts = ({ type }) => {
       </div>
 
       <div className="bottom">
-        {imgdata.map((data)=>{
+        {products?.map((data)=>{
           // data["Regular price"]="reglar_price";
-          console.log();
-            return <ProductCard key={data.ID}  {...data} ></ProductCard>
+          // console.log(data);
+
+         return (< >{loading?<Bars
+          width=''
+          height= '150'
+        />:<ProductCard  id={data.id} {...data.attributes} ></ProductCard>}</>)
         })}
       </div>
     </div>

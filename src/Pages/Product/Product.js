@@ -1,46 +1,80 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { singleproduct } from "../../Assets/Data/Data";
 import { FaBalanceScale, FaCartPlus } from "react-icons/fa";
 import { MdCompare, MdFavorite } from "react-icons/md";
+import InvokeAPI from "../../APICALL/apicall";
 import "./Product.scss";
 const Product = () => {
   const [selectImage, setSelectImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
+  const [loading, setloading] = useState(true);
+  const [product, setProduct] = useState();
 
   const productID = Number(useParams().id);
   console.log(productID);
+
+  useEffect(() => {
+   
+    apicall()
+    console.log(product);
+  }, [productID]);
+  
+  const apicall = async ()=>{
+      const res = await InvokeAPI(`products/${productID}`,'get','','',{populate:'*'},'')
+      //  console.log(res);
+    
+      setProduct(res.data)
+      setloading(false)
+      console.log(product);
+      // console.log(products);
+  }
+
+
+
+  let pro={}
+if (product?.attributes) {
+   pro = product?.attributes
+}
+ 
+
+
 
   return (
     <div className="Product">
       <div className="left">
         <div className="images">
-          {singleproduct.imagesData.map((data, key) => {
-            return (
-              <img
-                src={data}
-                key={key}
-                alt=""
-                onClick={(e) => setSelectImage(key)}
-              />
-            );
-          })}
+          {
+           
+           product?.attributes?.media.data?.map((image,index)=>{
+
+            console.log(image.index);
+
+            return  <img
+            src={`http://localhost:1337${image.attributes.formats.medium.url}`}
+            key={image.id}
+            alt={image.attributes.formats.medium.name}
+            onClick={(e) => setSelectImage(index)}
+          />
+
+           })
+            
+             
+          
+            }
         </div>
         <div className="mainImage">
          
-          <img src={singleproduct.imagesData[selectImage]} alt="" />
+          <img src={`http://localhost:1337${product?.attributes?.media.data[selectImage].attributes.formats.medium.url}`} alt={product?.attributes?.media.data[selectImage].attributes.formats.medium.name} />
         </div>
       </div>
 
       <div className="right">
-        <h2>culpa nulla dolore irure non</h2>
-        <span className="price">$199</span>
+        <h2>{pro.ttile}</h2>
+        <div className="productPrice"><span className="regular">{pro.regular_price}</span> <span className="sale">{pro.sale_price}</span></div>
         <p>
         
-          Voluptate sunt enim aliqua nostrud ipsum cupidatat et fugiat enim
-          tempor laborum nulla et. Laborum deserunt culpa nulla dolore irure non
-          esse ullamco cillum. Adipisicing ad id non occaecat magna amet. Sint
-          laborum cillum nisi tempor cillum quis nulla.
+         {pro.desc}
         </p>
         <div className="quantity">
           <button

@@ -1,28 +1,28 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import './ProductCard.scss'
-const ProductCard = ({ imagesData, Categories, Name, Type, ID
+const ProductCard = ({ media,ttile,desc,product_type,regular_price,sale_price,isnew,id
 }) => {
  
-  if (imagesData) {
-    return (
-      <Link className="link" to={`/product/${ID}`}>
-        <div className="card">
-          <div className="image">
-            <span className="newsesson">New Session</span>
-            {imagesData.map((image,index)=>{
-              return <img  className={`mainImage${index}`} src={image} key={index} alt={Name} />
-            })}
-          </div>
-          <h4>{Name.substring(0,20)}</h4>
-          <div className="prices">
-            <h5>$ {ID}</h5>
-            <h5>$ {ID}</h5>
-          </div>
-          </div>
-      </Link>
-    );
-  }
+  return (
+    <Link className="link" to={`/product/${id}`}>
+      <div className="card">
+        <div className="image">
+          {isnew?<span className="newsesson">New Session</span>:''}
+          {media['data'].map((image)=>{
+           
+            const {medium,large,small}=image['attributes']['formats']
+           return <img  className={`mainImage${image.id}`} src={`http://localhost:1337${medium.url}`} key={image.id} alt={image.attributes.name} />
+          })}
+        </div>
+        <h4>{ttile.substring(0,20)}</h4>
+        <div className="prices">
+          <h5>$ {regular_price}</h5>
+          <h5>$ {sale_price}</h5>
+        </div>
+        </div>
+    </Link>
+  );
  
 };
 
