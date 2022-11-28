@@ -72,10 +72,10 @@ const Header = () => {
             <Link to={`/contact`}>
               <FaSearch className="icon-class"></FaSearch>
             </Link>
-            <Link to={`/contact`}>
+            <Link to={`profile`}>
               <FaUser className="icon-class"></FaUser>
             </Link>
-            <Link to={`/contact`}>
+            <Link to={`wishlist`}>
               <MdFavorite className="icon-class"></MdFavorite>
             </Link>
             <div className="cart-icon" onClick={(e)=>setopenCart(!openCart)}>
