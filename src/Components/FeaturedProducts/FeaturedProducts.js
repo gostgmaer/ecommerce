@@ -1,39 +1,54 @@
-import React ,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import ProductCard from "../ProductCard/ProductCard";
 import { imgdata } from "./data";
 import "./FeaturedProducts.scss";
 import InvokeAPI from "../../APICALL/apicall";
 
-import { Bars } from  'react-loader-spinner'
+import { Bars } from "react-loader-spinner";
 
-import { Audio } from  'react-loader-spinner'
+import { Audio } from "react-loader-spinner";
+import useFetch from "../../Hooks/UseFetch";
 
 const FeaturedProducts = ({ type }) => {
-//   console.log(imgdata);
+  //   console.log(imgdata);
 
+  // const [products, setProducts] = useState([]);
+  // const [loading, setloading] = useState(true);
 
-const [products, setProducts] = useState([]);
-const [loading, setloading] = useState(true);
+  const { products, loading, error } = useFetch(
+    "products",
+    "get",
+    "",
+    {
+      populate: "*",
+      "[filters][product_type][$eq]": type,
+    },
+    "",
+    ""
+  );
 
-useEffect(() => {
-   
-  apicall()
-  console.log(products);
-}, []);
+  // useEffect(() => {
 
-const apicall = async ()=>{
-    const res = await InvokeAPI('products','get','','',{populate:'*'},'')
-    
-  
-    setProducts(res.data)
-    setloading(false)
-    // console.log(products);
-}
+  //   apicall()
+  //   console.log(products);
+  // }, []);
+
+  // const apicall = async ()=>{
+  //   let query = {
+  //     populate:'*',
+  //     '[filters][product_type][$eq]':type
+  //   }
+  //     const res = await InvokeAPI('products','get','','',query,'')
+
+  //     setProducts(res.data)
+  //     setloading(false)
+  //     // console.log(products);
+  // }
 
   // imgdata.forEach((element) => {
   //   element["imagesData"] = element.Images.split(",");
   // });
-  console.log(imgdata);
+  // console.log(imgdata);
   return (
     <div className="FeaturedProducts">
       <div className="top">
@@ -52,14 +67,19 @@ const apicall = async ()=>{
       </div>
 
       <div className="bottom">
-        {products?.map((data)=>{
+        {products?.map((data) => {
           // data["Regular price"]="reglar_price";
           // console.log(data);
 
-         return (< >{loading?<Bars
-          width=''
-          height= '150'
-        />:<ProductCard  id={data.id} {...data.attributes} ></ProductCard>}</>)
+          return (
+            <React.Fragment key={data.id}>
+              {loading ? (
+                <Bars width="" height="150" />
+              ) : (
+                <ProductCard id={data.id} {...data.attributes}></ProductCard>
+              )}
+            </React.Fragment>
+          );
         })}
       </div>
     </div>

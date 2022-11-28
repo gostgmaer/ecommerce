@@ -65,13 +65,13 @@ if (product?.attributes) {
         </div>
         <div className="mainImage">
          
-          <img src={`http://localhost:1337${product?.attributes?.media.data[selectImage].attributes.formats.medium.url}`} alt={product?.attributes?.media.data[selectImage].attributes.formats.medium.name} />
+          <img src={`http://localhost:1337${product?.attributes?.media?.data[selectImage].attributes.formats.medium.url}`} alt={product?.attributes?.media.data[selectImage].attributes.formats.medium.name} />
         </div>
       </div>
 
       <div className="right">
         <h2>{pro.ttile}</h2>
-        <div className="productPrice"><span className="regular">{pro.regular_price}</span> <span className="sale">{pro.sale_price}</span></div>
+        <div className="productPrice"><span className="regular">${pro.regular_price}</span> <span className="sale"> ${pro.sale_price}</span></div>
         <p>
         
          {pro.desc}

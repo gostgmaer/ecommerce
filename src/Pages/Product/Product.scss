@@ -8,9 +8,11 @@
         display: flex;
         gap: 20px;
         ::-webkit-scrollbar {
-            height: 5px;              /* height of horizontal scrollbar ← You're missing this */
+            height: 5px; 
+            border-radius: 5px;   
+            background-color: aqua;          /* height of horizontal scrollbar ← You're missing this */
             width: 5px;               /* width of vertical scrollbar */
-            border: 1px solid red;}
+            border: 1px solid rgb(120, 120, 120);}
 
         .images {
             flex: 1;    
