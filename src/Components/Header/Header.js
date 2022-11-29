@@ -22,11 +22,12 @@ import "./headers.scss";
 import UserIconData from "./UserIconData";
 import { BsArrow90DegDown, BsArrowBarUp, BsCart } from "react-icons/bs";
 import CartComponent from "../CartComp/CartComponent";
-
+import { useSelector } from "react-redux";
 
 
 const Header = () => {
   const [openCart, setopenCart] = useState(false);
+  const products = useSelector(state=>state.cart.products)
 
 
   return (
@@ -80,7 +81,7 @@ const Header = () => {
             </Link>
             <div className="cart-icon" onClick={(e)=>setopenCart(!openCart)}>
               <BsCart cla></BsCart>
-              <span>0</span>
+              <span>{products.length}</span>
             </div>
           </div>
         </div>

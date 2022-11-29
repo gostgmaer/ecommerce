@@ -5,12 +5,14 @@ import { FaBalanceScale, FaCartPlus } from "react-icons/fa";
 import { MdCompare, MdFavorite } from "react-icons/md";
 import InvokeAPI from "../../APICALL/apicall";
 import "./Product.scss";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../REDUX/CartReducer";
 const Product = () => {
   const [selectImage, setSelectImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [loading, setloading] = useState(true);
   const [product, setProduct] = useState();
-
+const dispatch = useDispatch()
   const productID = Number(useParams().id);
   console.log(productID);
 
@@ -85,7 +87,7 @@ if (product?.attributes) {
           {quantity}
           <button onClick={(e) => setQuantity((prev) => prev + 1)}>+</button>
         </div>
-        <button className="addToCart">
+        <button onClick={()=>dispatch(addToCart({id:product.id,title:pro.ttile,desc:pro.desc,image:product?.attributes?.media.data[0].attributes.formats.medium.url,price:pro.sale_price,quantity}))} className="addToCart">
           <FaCartPlus></FaCartPlus> Add to Cart
         </button>
         <div className="links">

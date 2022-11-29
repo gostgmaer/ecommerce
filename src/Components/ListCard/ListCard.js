@@ -10,12 +10,14 @@ const ListCard = ({catID,maxPrice,sort,SubCategories}) => {
 
 
   const { products, loading, error } = useFetch(
-    `products`,
+    `products?${SubCategories.map((item)=>`[filters][sub_categories][id][$eq]'=${item}`)}&[filters][sale_price][$lte]=${maxPrice}&sort=sale_price:${sort}`,
     "get",
     "",
     {
       populate: "*",
-      "[filters][categories][id]": catID
+      "[filters][categories][id]": catID,
+      
+      
     },
     "",
     ""
